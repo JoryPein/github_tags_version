@@ -3,6 +3,8 @@ from utils.cache import cache
 import parsel
 from datetime import datetime
 import json
+import sys
+import os
 
 
 @cache()
@@ -34,13 +36,15 @@ def parse_page(url):
 
 def main():
 	domain = 'https://github.com'
-	repo = 'microsoft/vscode
+	repo = sys.argv[1]
 	path = f'/{repo}/tags'
 	versions = list()
+	if not os.path.exists(os.path.dirname(sys.argv[2])):
+		os.makedirs(os.path.dirname(sys.argv[2]))
 	while path:
 		path, l = parse_page(domain+path)
 		versions.extend(l)
-	with open('versions.json', 'w') as fp:
+	with open(sys.argv[2], 'w') as fp:
 		json.dump(dict(total=len(versions), data=versions), fp, indent=2, ensure_ascii=False)
 
 
