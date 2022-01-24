@@ -34,7 +34,8 @@ def parse_page(url):
 
 def main():
 	domain = 'https://github.com'
-	path = '/microsoft/vscode/tags'
+	repo = 'microsoft/vscode
+	path = f'/{repo}/tags'
 	versions = list()
 	while path:
 		path, l = parse_page(domain+path)
